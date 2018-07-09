@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 -->  
+<mapper namespace="com.watchdog.dao.HamletDao">  
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复   
+            使用parameterType属性指明查询时使用的参数类型，  
+            resultType属性指明查询返回的结果集类型   
+            resultType="org.guus.bean.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->  
+    <!-- 根据id查询得到一个user对象 -->  
+    <select id="Getuser_page_farmDogList" parameterType="java.util.Map" resultType="com.watchdog.model.Sheepdogs">  
+        SELECT dogid,dogname,neckletid FROM sheepdogs WHERE username=#{username} and (apparatusid  = '-1') 
+        <if test="pageBean1 != null">
+             limit #{pagestart},#{pagesize}
+        </if>
+    </select> 
+    
+    <select id="Getuser_page_farmDogListtotal" parameterType="String" resultType="Integer">  
+        SELECT count(*) FROM sheepdogs WHERE username=#{username} and (apparatusid  = '-1') 
+    </select>
+    
+    <select id="getlastexhibitrealtime" parameterType="String" resultType="com.watchdog.model.Lastexhibitrealtime">  
+        select  neckletid, realtime,tableremain,nextexhibittime from lastexhibitrealtime where neckletid=#{neckletid}
+    </select>
+    
+    <select id="getfeedback" parameterType="String"  resultType="com.watchdog.model.Feedback">
+    	select firstmedtime,medtotal,exhibitcycle from feedback where neckletid=#{neckletid}
+    </select>
+    
+    <select id="GovToEchartsAreaName" parameterType="String"  resultType="String">
+    	select shortname from districts where districtname = #{areaname} or shortname = #{areaname}
+    </select>
+    
+    <select id="EchartsAreaNameToGov" parameterType="String"  resultType="String">
+    	select districtname from districts where districtname = #{areaname} or shortname = #{areaname}
+    </select>
+    
+    <select id="getprovincecode" parameterType="java.util.Map"  resultType="String">
+    	select districtcode from districts where districtname=#{provincename} or shortname=#{provincename}
+    </select>
+    
+    <select id="getcitycode" parameterType="java.util.Map"  resultType="String">
+    	select districtcode from districts where (districtname=#{cityname} or shortname=#{cityname}) and districtcode like concat(#{provincecode0to2},'%')
+    </select>
+    
+    <select id="getcountycode" parameterType="java.util.Map"  resultType="String">
+    	select districtcode from districts where (districtname=#{countyname} or shortname=#{countyname}) and districtcode like concat(#{citycode0to4},'%')
+    </select>
+    
+    <select id="getvillagecode" parameterType="java.util.Map"  resultType="String">
+    	select districtcode from districts where (districtname=#{villagename} or shortname=#{villagename}) and districtcode like concat(#{countycode0to6},'%')
+    </select>
+    
+    <select id="gethamletcode" parameterType="java.util.Map"  resultType="com.watchdog.model.Districts">
+    	select districtcode,lng,lat from districts where (districtname=#{hamletname} or shortname=#{hamletname}) and districtcode like concat(#{thisvillage0to9},'%')
+    </select>
+    
+    <select id="gethamletdogs" parameterType="String"  resultType="com.watchdog.model.Sheepdogs">
+    	select dogid,neckletid,dogname,managername from sheepdogs where districtcode = #{thishamletcode} and neckletid != '-1'
+    </select>
+    
+    <select id="getlastneckletrealtime" parameterType="String"  resultType="com.watchdog.model.Lastneckletrealtime">
+    	select neckletlongitude,neckletvdoing from lastneckletrealtime where neckletid =#{item.neckletid}
+    </select>
+    
+    <select id="Getupuser_page_farmDogFeederList" parameterType="String" resultType="com.watchdog.model.Sheepdogs">  
+        select dogid,dogname,apparatusid,managername from sheepdogs where districtcode = #{hamletcode} and apparatusid !='-1'
+    </select> 
+    
+    <select id="getlastappexhibitrealtime" parameterType="String"  resultType="com.watchdog.model.Lastappexhibitrealtime">
+    	select realtime,tableremain,nextexhibittime from lastappexhibitrealtime where apparatusid = #{feederid}
+    </select>
+    
+    <select id="getfeederback" parameterType="String"  resultType="com.watchdog.model.Feederback">
+    	select firstmedtime,medtotal from feederback where apparatusid = #{feederid}
+    </select>
+    
+    <select id="getlastapparatusrealtime" parameterType="String" resultType="com.watchdog.model.Lastapparatusrealtime">  
+        select apparatuslongitude,apparatusvdoing from lastapparatusrealtime where apparatusid = #{apparatusid}
+    </select>
+    
+    <select id="GetLevel6AdminDogNum" parameterType="String" resultType="com.watchdog.model.Sheepdogs">  
+        select neckletid from sheepdogs where username = #{username}
+    </select>
+    
+    <select id="combineneckletandfeederdoglist" parameterType="java.util.Map" resultType="com.watchdog.model.Sheepdogs">  
+        SELECT dogid,dogname,neckletid,apparatusid,managername FROM sheepdogs WHERE username=#{username}
+        <if test="pageBean1 != null">
+             limit #{pagestart},#{pagesize}
+        </if>
+    </select>
+    
+    <select id="combineneckletandfeederdogtotal" parameterType="String" resultType="Integer">  
+        SELECT count(*) FROM sheepdogs WHERE username=#{username}
+    </select>
+</mapper> 

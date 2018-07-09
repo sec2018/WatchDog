@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 -->  
+<mapper namespace="com.watchdog.dao.ProvinceDao">  
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复   
+            使用parameterType属性指明查询时使用的参数类型，  
+            resultType属性指明查询返回的结果集类型   
+            resultType="org.guus.bean.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->  
+    <!-- 根据id查询得到一个user对象 -->  
+
+    
+    <select id="getdistrictsist" resultType="com.watchdog.model.Districts">
+    	select * from districts where districtname=#{provincename} or shortname=#{provincename}
+    </select>
+    <select id="getprovinceindexinfo" resultType="com.watchdog.model.Sheepdogs">
+    	select * from sheepdogs where districtcode like concat(#{provincecode0to2},'%') and ((neckletid ='-1' and apparatusid !='-1') or (apparatusid ='-1' and neckletid !='-1'))
+    </select>
+    <select id="getexhicount" resultType="int">
+    	 select count(*) from exhibitrealtime where districtcode like concat(#{provincecode0to2},'%')
+    </select>
+    <select id="getappexhicount" resultType="int">
+    	 select count(*) from appexhibitrealtime  where districtcode like concat(#{provincecode0to2},'%')
+    </select>
+    <select id="ywdisctricts" resultType="com.watchdog.model.Districts">
+    	select districtcode,epidemic from districts where districtcode like concat(#{provincecode0to2},'%')
+    </select>
+   
+     <select id="getmanagerlevel" resultType="int">
+    	select privilegelevel from managers where province=#{provincename}
+    </select>
+     <select id="getalldognum" resultType="int">
+    	select totalnums from totaldogs where districtcode like #{provincecode};
+    </select>
+    
+    
+     <!-- provincemap -->  
+     <select id="getprovincemap" resultType="String">
+    	select districtcode from districts where districtname=#{provincename} or shortname=#{provincename}
+    </select>
+     
+     <select id="ywprovinces" resultType="com.watchdog.model.Districts">
+    	select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisprovince1to2}, '.{4}000000') and districtcode !=concat(#{thisprovince1to2}, '0000000000') 
+    </select>
+     
+     <select id="getmanagernum" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from managers where city=#{districtname}
+    </select>
+    
+        <select id="getallnecketid" parameterType="java.util.Map"  resultType="String">
+    	select neckletid from sheepdogs where districtcode like concat(#{city1to4},'%')
+    </select>
+    
+      <select id="getcountexhibitrealtime" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from exhibitrealtime where districtcode like concat(#{city1to4},'%')
+    </select>
+    
+      <select id="getcountappexhibitrealtime" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from appexhibitrealtime where districtcode like concat(#{city1to4},'%')
+    </select>
+    
+      <select id="ywarmyprovinces" resultType="com.watchdog.model.Districts">
+        select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisprovince1to2}, '.{4}00')  and districtcode !=concat(#{thisprovince1to2}, '000000') and epidemic = 1
+    </select>
+    
+     <select id="getarmyallnecketid" parameterType="java.util.Map"  resultType="String">
+    	select neckletid from sheepdogs where districtcode like concat(#{regimental1to4},'%')
+    </select>
+    
+     <select id="getarmycountexhibitrealtime" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from exhibitrealtime where districtcode like concat(#{regimental1to4},'%')
+    </select>
+    
+      <select id="getarmycountappexhibitrealtime" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from appexhibitrealtime where districtcode like concat(#{regimental1to4},'%')
+    </select>
+    
+    <!-- GovToEchartsAreaName -->
+      <select id="echartsareanametemp"   resultType="String">
+    	select shortname from districts where districtname =#{areaname} or shortname =#{areaname}
+    </select>
+    <!-- EchartsAreaNameToGov -->
+      <select id="govareanametemp"   resultType="String">
+    	select districtname from districts where districtname =#{areaname} or shortname =#{areaname}
+    </select>
+    
+    
+     
+</mapper> 

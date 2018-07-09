@@ -1,0 +1,208 @@
+.users-list .header h3 {
+  margin-top: 0px;
+}
+.users-list .header input.search {
+  padding: 5px 6px;
+  position: relative;
+  top: 0px;
+}
+.users-list .header input.search:focus {
+  box-shadow: none;
+  border: 1px solid #888;
+}
+.users-list .header .ui-select {
+  margin: 3px 40px 0 0;
+}
+.users-list .header .ui-dropdown {
+  margin-left: 20px;
+}
+.users-list .header .ui-dropdown input.form-control {
+  width: 60px;
+  display: inline-block;
+  height: 28px;
+  margin: 0px 8px;
+}
+.users-list .header a.btn-flat span {
+  font-size: 17px;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+}
+.users-list .table td {
+  vertical-align: middle;
+  font-size: 13px;
+}
+.users-list .table img.avatar {
+  float: left;
+  margin-right: 14px;
+  max-width: 45px;
+  position: relative;
+  top: 8px;
+}
+.users-list .table a.name {
+  color: #3389d1;
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 15px 0 0 0;
+}
+.users-list .table .subtext {
+  font-size: 12px;
+  margin-left: 0;
+  color: #778391;
+  font-style: italic;
+  margin-top: 0;
+}
+.users-list .pagination {
+  margin-top: 25px;
+}
+
+/*user-defined*/
+.table > thead > tr > td,
+.table > thead > tr > th {
+  font-size: 18px !important;
+  padding: 0px 15px 0px 0px ;
+  text-align:center;
+  vertical-align:middle !important;
+}
+.table > tbody > tr > td,
+.table > tfoot > tr > td,
+.table > tbody > tr > th,
+.table > tfoot > tr > th {
+  font-size: 15px !important;
+  padding: 0px 15px 0px 0px ;
+  text-align:center;
+  vertical-align:middle !important;
+}
+/* Stats chart */
+#statsChart {
+  height: 500px;
+  margin-top: 15px; }
+
+/*page_bar*/
+.barcon {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.barcon1 {
+	font-size: 17px;
+	float: left;
+	margin-top: 5px;
+}
+
+.barcon2 {
+	font-size: 17px;
+	float: right;
+	margin-top: 5px;
+}
+
+	.barcon2 ul {
+		margin: 5px 0;
+		padding-left: 0;
+		list-style: none;
+		text-align: center;
+	}
+
+	.barcon2 li {
+		display: inline;
+	}
+
+	.barcon2 a {
+		font-size: 16px;
+		font-weight: normal;
+		display: inline-block;
+		padding: 5px;
+		padding-top: 0;
+		color: black;
+		border: 1px solid #ddd;
+		background-color: #fff;
+	}
+
+		.barcon2 a:hover {
+			background-color: #eee;
+		}
+
+.ban {
+	opacity: .4;
+}
+
+
+/* responsive */
+@media (max-width: 767px) {
+  .ui-dropdown .dialog .body {
+    width: 250px;
+    left: 58%;
+    position: relative;
+  }
+
+  .users-list .table a.name {
+    font-size: 12px;
+  }
+  .users-list .table td {
+    font-size: 12px;
+  }
+  .users-list .table .avatar {
+    display: none;
+  }
+  .users-list h3 {
+    display: block;
+    float: none;
+    margin-bottom: 0px;
+	font-size:18px;
+  }
+  .users-list .header input.search {
+    margin-bottom: 18px;
+  }
+  .users-list .header .ui-dropdown {
+    float: left;
+    margin-left: 0;
+  }
+
+  .ui-dropdown .dialog .body .form input[type="text"] {
+    margin-top: 10px;
+  }
+
+  .ui-dropdown .dialog .body .form a {
+    margin-top: 10px;
+    margin-left: 18px;
+  }
+
+	/*table_hide1_admin_manage*/
+	.table_hide > thead > tr > th:nth-child(3),
+	.table_hide > thead > tr > th:nth-child(4){
+		padding: 0px 20px 0px 5px ;
+	}
+
+	/*table_hide1_village_manage*/
+	.table_hide > thead > tr > td,
+	.table_hide > thead > tr > th,
+	.table_hide2 > thead > tr > td,
+	.table_hide2 > thead > tr > th,
+	.table_hide1 > thead > tr > td,
+	.table_hide1 > thead > tr > th {
+		font-size: 15px !important;
+	}
+	.table_hide > tbody > tr > td,
+	.table_hide > tfoot > tr > td,
+	.table_hide > tbody > tr > th,
+	.table_hide > tfoot > tr > th,
+	.table_hide2 > tbody > tr > td,
+	.table_hide2 > tfoot > tr > td,
+	.table_hide2 > tbody > tr > th,
+	.table_hide2 > tfoot > tr > th,
+	.table_hide1 > tbody > tr > td,
+	.table_hide1 > tfoot > tr > td,
+	.table_hide1 > tbody > tr > th,
+	.table_hide1 > tfoot > tr > th {
+	  font-size: 12px !important;
+	}
+	/*table_hide2_hamelet_manage*/
+	.table_hide2 > thead > tr > th:nth-child(1),
+	.table_hide2 > thead > tr > th:nth-child(2),
+	.table_hide2 > thead > tr > th:nth-child(5){
+		padding: 0px 20px 0px 5px ;
+	}
+
+}
