@@ -17,15 +17,15 @@ public class ProvinceServiceImpl implements ProvinceService {
 	@Resource
 	private ProvinceDao provinceDao;
 	@Override
-	public Map<String, Integer> GetIndexLogoInfo(Managers manager,String provincename) {
+	public Map<String, Integer> GetIndexLogoInfo(String provincename) {
 		// TODO Auto-generated method stub
-		return provinceDao.GetIndexLogoInfo(manager,provincename);
+		return provinceDao.GetIndexLogoInfo(provincename);
 	}
 
 	@Override
-	public Map<String, Integer> GetArmyIndexLogo(Managers manager,String provincename) {
+	public Map<String, Integer> GetArmyIndexLogo(String provincename) {
 		// TODO Auto-generated method stub
-		return provinceDao.GetArmyIndexLogo(manager,provincename);
+		return provinceDao.GetArmyIndexLogo(provincename);
 	}
 
 	@Override
