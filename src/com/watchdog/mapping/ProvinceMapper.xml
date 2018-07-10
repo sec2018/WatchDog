@@ -39,7 +39,7 @@
     </select>
      
      <select id="ywprovinces" resultType="com.watchdog.model.Districts">
-    	select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisprovince1to2}, '.{4}000000') and districtcode !=concat(#{thisprovince1to2}, '0000000000') 
+    	select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisprovince1to2}, '.{4}000000') and districtcode !=concat(#{thisprovince1to2}, '0000000000'and epidemic = 1) 
     </select>
      
      <select id="getmanagernum" parameterType="java.util.Map"  resultType="int">
