@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
     <link href="../css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
 
     <!-- libraries -->
-
+    
     <link href="../css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
 
     <!-- global styles -->
@@ -21,10 +22,12 @@
     <!-- this page specific styles -->
     <link rel="stylesheet" href="../css/compiled/index.css" type="text/css" media="screen" />
 
+
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+     
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	if(session.getAttribute("currentUser")==null){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
@@ -133,30 +136,36 @@
                             </tr>
                             <!--<tr id="tr_epidemicprovice">
                                 <td>
-                                    兵团级
+                                    省级
                                 </td>
                                 <td id="proviceepidemictotal">
                                 </td>
-                            </tr>-->
+                            </tr>
                             <tr id="tr_epidemiccity">
                                 <td>
-                                    师级
+                                    地市级
                                 </td>
-                                <td id="cityepidemictotal"></td>
-                            </tr>
+                                <td id="cityepidemictotal">
+                                </td>
+                            </tr>-->
                             <tr id="tr_epidemiccounty">
                                 <td>
-                                    团级
+                                    县级
                                 </td>
                                 <td id="countyepidemictotal"></td>
                             </tr>
                             <tr id="tr_epidemicvillage">
                                 <td>
-                                    连级
+                                    乡级
                                 </td>
                                 <td id="villageepidemictotal"></td>
                             </tr>
-
+                            <tr>
+                                <td>
+                                    村级
+                                </td>
+                                <td id="hamletepidemictotal"></td>
+                            </tr>
                             <tr class="success" id="tr_admin" style="cursor:pointer">
                                 <td>
                                     管理人员
@@ -171,30 +180,37 @@
                                 </td>
                                 <td id="countryadmintotal">
                                 </td>
-                            </tr>-->
+                            </tr>
                             <tr id="tr_adminprovince">
                                 <td>
-                                    兵团级
+                                    省级
                                 </td>
-                                <td id="proviceadmintotal"></td>
-                            </tr>
+                                <td id="proviceadmintotal">
+                                </td>
+                            </tr>-->
                             <tr id="tr_admincity">
                                 <td>
-                                    师级
+                                    地市级
                                 </td>
                                 <td id="cityadmintotal"></td>
                             </tr>
                             <tr id="tr_admincounty">
                                 <td>
-                                    团级
+                                    县级
                                 </td>
                                 <td id="countyadmintotal"></td>
                             </tr>
                             <tr>
                                 <td>
-                                    连级
+                                    乡级
                                 </td>
                                 <td id="villageadmintotal"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    村级
+                                </td>
+                                <td id="hamletadmintotal"></td>
                             </tr>
                             <tr class="success">
                                 <td>
@@ -206,7 +222,7 @@
                             </tr>
                             <tr>
                                 <td id="td_areaalldognumtotal">
-                                    全省总数
+                                    全市总数
                                 </td>
                                 <td id="countryalldognumtotal"></td>
                             </tr>
@@ -220,7 +236,7 @@
                             </tr>
                             <tr>
                                 <td id="td_areadognumtotal">
-                                    全省总数
+                                    全市总数
                                 </td>
                                 <td id="neckdognumtotal"></td>
                             </tr>
@@ -234,9 +250,9 @@
                             </tr>
                             <tr>
                                 <td id="td_areawsqdognumtotal">
-                                    全省总数
+                                    全市总数
                                 </td>
-                                <td id="countrywsqdognumtotal"></td>
+                                <td id="citywsqdognumtotal"></td>
                             </tr>
                             <tr class="success">
                                 <td>
@@ -248,7 +264,7 @@
                             </tr>
                             <tr>
                                 <td id="td_arearatedognumtotal">
-                                    全省
+                                    全市
                                 </td>
                                 <td id="countryratedognumtotal"></td>
                             </tr>
@@ -262,7 +278,7 @@
                             </tr>
                             <tr>
                                 <td id="td_areamednumtotal">
-                                    全省总数
+                                    全市总数
                                 </td>
                                 <td id="countrymednumtotal"></td>
                             </tr>
@@ -276,21 +292,22 @@
 
     <!-- scripts -->
     <script src="../js/jquery-latest.js"></script>
- <!--    <script src="../js/Jquery_ajax_extention.js"></script>
-    <script type="text/javascript">
+<!--     <script src="../js/Jquery_ajax_extention.js"></script> -->
+<!--     <script type="text/javascript">
         var Ticket = '@ViewBag.Ticket';
         var username = '@ViewBag.UserName';
         var provincename = '@ViewBag.Province';
+        var cityname = '@ViewBag.City';
     </script> -->
     <script src="../js/bootstrap.min.js"></script>
-
+ 
     <!--echarts2-->
     <script src="../js/other.js"></script>
     <script src="../js/echarts.js"></script>
     <script src="../js/china.js"></script>
     <!-- flot charts -->
     <script src="../js/theme.js"></script>
-    <script src="../js/pages/pagecorps.js" type="text/javascript"></script>
+    <script src="../js/pages/pagecity.js" type="text/javascript"></script>
 
 </body>
 </html>

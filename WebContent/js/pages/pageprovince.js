@@ -23,6 +23,7 @@
             $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
             $("#countrymednumtotal").text(data.data2.countrymednumtotal);
 
+            var provinceGov;
             GetProvinceEcharts(data);
 
             //$("#tr_admin").click(function () {
@@ -43,7 +44,7 @@
                 //});
             }
             else if (data.data1.privilegelevel == 2) {
-                $("#span_leftscan").html(provincename + "总览");
+                $("#span_leftscan").html(provinceGov + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=2";
                 })
@@ -53,7 +54,7 @@
                 $("#goback").css("display", "none");
             }
             else {
-                window.location.href = "/Login/SignIn";
+                window.location.href = "../user/logout.do";
             }
         }
 )
@@ -126,10 +127,12 @@ function GetProvinceEcharts(data) {
 
     var p_feeders = new Array();
 
-    var province = "" + data.data4.province;
-    $("#h3_logtitle").html(province);
+  
+    provinceGov = "" + data.data4.provinceGov;
+    var provinceEchartsAreaName="" + data.data4.provinceEchartsAreaName;
+    $("#h3_logtitle").html(provinceGov);
     var map_ctrl = {};
-    map_ctrl[province] = true;
+    map_ctrl[provinceEchartsAreaName] = true;
 
     var necklet_min = 0;
     var necklet_max = 100;
@@ -226,7 +229,7 @@ function GetProvinceEcharts(data) {
                     {
                         name: '流行县数量',
                         type: 'map',
-                        mapType: province,
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -238,7 +241,7 @@ function GetProvinceEcharts(data) {
                     {
                         name: '管理员总数量',
                         type: 'map',
-                        mapType: province,
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -250,7 +253,7 @@ function GetProvinceEcharts(data) {
                     {
                         name: '牧犬总数量',
                         type: 'map',
-                        mapType: province,
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -262,7 +265,7 @@ function GetProvinceEcharts(data) {
                     {
                         name: '项圈总数量',
                         type: 'map',
-                        mapType: province,
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -274,7 +277,7 @@ function GetProvinceEcharts(data) {
                     {
                         name: '喂饲器数量',
                         type: 'map',
-                        mapType: province,
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -286,7 +289,7 @@ function GetProvinceEcharts(data) {
                     {
                         name: '投药总次数',
                         type: 'map',
-                        mapType: province,
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -298,7 +301,7 @@ function GetProvinceEcharts(data) {
                     {
                         name: '项圈犬占比',
                         type: 'map',
-                        mapType: province,
+                        mapType: provinceEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -316,9 +319,10 @@ function GetProvinceEcharts(data) {
 
             var name_selected = '';
             myChart.on("click", function (param) {
-                //alert(param.name + 'S');
+               // alert(param.seriesName + 'S'+ (param.name == name_selected));
                 if (param.seriesName != '' && param.name == name_selected) {
-                    window.location.href = "/Index/City?city=" + escape(param.name) + "&province=" + escape(provincename);
+                	 
+                    window.location.href = "../city/city.do?city=" + param.name + "&province=" + provinceGov;
                     //alert(param.name);
                 } else {
                     name_selected = param.name;

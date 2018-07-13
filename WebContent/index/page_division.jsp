@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +12,6 @@
     <link href="../css/bootstrap/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
 
     <!-- libraries -->
-
     <link href="../css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
 
     <!-- global styles -->
@@ -24,7 +25,8 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+     
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	if(session.getAttribute("currentUser")==null){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
@@ -83,18 +85,18 @@
                     <span>个人信息</span>
                 </a>
             </li>
-            <!--<li>
-                <a style="cursor:pointer" id="pagereflash">
-                    <i class="icon-repeat"></i>
-                    <span>刷新</span>
-                </a>
-            </li>-->
             <li>
                 <a href="/Login/Index?clicktype=quit" style="cursor:pointer">
                     <i class="icon-off"></i>
                     <span>退出</span>
                 </a>
             </li>
+            <!--<li>
+                <a style="cursor:pointer" id="pagereflash">
+                    <i class="icon-repeat"></i>
+                    <span>刷新</span>
+                </a>
+            </li>-->
             <li>
                 <a style="cursor:pointer" id="goback" href="#" onclick="history.back(-1);return false;">
                     <i class="icon-arrow-left"></i>
@@ -131,19 +133,6 @@
                                     数量（个）
                                 </td>
                             </tr>
-                            <!--<tr id="tr_epidemicprovice">
-                                <td>
-                                    兵团级
-                                </td>
-                                <td id="proviceepidemictotal">
-                                </td>
-                            </tr>-->
-                            <tr id="tr_epidemiccity">
-                                <td>
-                                    师级
-                                </td>
-                                <td id="cityepidemictotal"></td>
-                            </tr>
                             <tr id="tr_epidemiccounty">
                                 <td>
                                     团级
@@ -164,19 +153,6 @@
                                 <td>
                                     数量（人）
                                 </td>
-                            </tr>
-                            <!--<tr id="tr_admincountry">
-                                <td>
-                                    国家级
-                                </td>
-                                <td id="countryadmintotal">
-                                </td>
-                            </tr>-->
-                            <tr id="tr_adminprovince">
-                                <td>
-                                    兵团级
-                                </td>
-                                <td id="proviceadmintotal"></td>
                             </tr>
                             <tr id="tr_admincity">
                                 <td>
@@ -206,7 +182,7 @@
                             </tr>
                             <tr>
                                 <td id="td_areaalldognumtotal">
-                                    全省总数
+                                    全师总数
                                 </td>
                                 <td id="countryalldognumtotal"></td>
                             </tr>
@@ -220,7 +196,7 @@
                             </tr>
                             <tr>
                                 <td id="td_areadognumtotal">
-                                    全省总数
+                                    全师总数
                                 </td>
                                 <td id="neckdognumtotal"></td>
                             </tr>
@@ -234,7 +210,7 @@
                             </tr>
                             <tr>
                                 <td id="td_areawsqdognumtotal">
-                                    全省总数
+                                    全师总数
                                 </td>
                                 <td id="countrywsqdognumtotal"></td>
                             </tr>
@@ -248,7 +224,7 @@
                             </tr>
                             <tr>
                                 <td id="td_arearatedognumtotal">
-                                    全省
+                                    全师
                                 </td>
                                 <td id="countryratedognumtotal"></td>
                             </tr>
@@ -262,7 +238,7 @@
                             </tr>
                             <tr>
                                 <td id="td_areamednumtotal">
-                                    全省总数
+                                    全师总数
                                 </td>
                                 <td id="countrymednumtotal"></td>
                             </tr>
@@ -276,21 +252,22 @@
 
     <!-- scripts -->
     <script src="../js/jquery-latest.js"></script>
- <!--    <script src="../js/Jquery_ajax_extention.js"></script>
-    <script type="text/javascript">
+    <!-- <script src="../js/Jquery_ajax_extention.js"></script> -->
+<!--     <script type="text/javascript">
         var Ticket = '@ViewBag.Ticket';
         var username = '@ViewBag.UserName';
         var provincename = '@ViewBag.Province';
+        var cityname = '@ViewBag.City';
     </script> -->
     <script src="../js/bootstrap.min.js"></script>
-
+ 
     <!--echarts2-->
     <script src="../js/other.js"></script>
     <script src="../js/echarts.js"></script>
     <script src="../js/china.js"></script>
     <!-- flot charts -->
     <script src="../js/theme.js"></script>
-    <script src="../js/pages/pagecorps.js" type="text/javascript"></script>
+    <script src="../js/pages/pagedivision.js" type="text/javascript"></script>
 
 </body>
 </html>

@@ -290,7 +290,7 @@
 
     <!-- scripts -->
     <script src="../js/jquery-latest.js"></script>
-    <script src="../js/Jquery_ajax_extention.js"></script>
+<!--     <script src="../js/Jquery_ajax_extention.js"></script>
     <script type="text/javascript">
 /*         var Ticket = '@ViewBag.Ticket';
         var username = '@ViewBag.UserName';
@@ -305,7 +305,7 @@
         //        }
         //    });
         //});
-    </script>
+    </script> -->
     <script src="../js/bootstrap.min.js"></script>
     <!--echarts2-->
     <script src="../js/other.js"></script>
