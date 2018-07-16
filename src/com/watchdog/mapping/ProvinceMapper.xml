@@ -29,7 +29,7 @@
     	select privilegelevel from managers where province=#{provincename}
     </select>
      <select id="getalldognum" resultType="int">
-    	select totalnums from totaldogs where districtcode like #{provincecode};
+    	select totalnums from totaldogs where districtcode=#{provincecode};
     </select>
     
     
@@ -38,8 +38,8 @@
     	select districtcode from districts where districtname=#{provincename} or shortname=#{provincename}
     </select>
      
-     <select id="ywprovinces" resultType="com.watchdog.model.Districts">
-    	select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisprovince1to2}, '.{4}000000') and districtcode !=concat(#{thisprovince1to2}, '0000000000'and epidemic = 1) 
+     <select id="getcitiesandcounties" resultType="com.watchdog.model.Districts">
+    	select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisprovince1to2}, '.{4}000000') and districtcode !=concat(#{thisprovince1to2}, '0000000000')and epidemic = 1 
     </select>
      
      <select id="getmanagernum" parameterType="java.util.Map"  resultType="int">
@@ -58,31 +58,20 @@
     	select count(*) from appexhibitrealtime where districtcode like concat(#{city1to4},'%')
     </select>
     
-      <select id="ywarmyprovinces" resultType="com.watchdog.model.Districts">
+      <select id="getdivisionsandregimental" resultType="com.watchdog.model.Districts">
         select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisprovince1to2}, '.{4}00')  and districtcode !=concat(#{thisprovince1to2}, '000000') and epidemic = 1
     </select>
     
      <select id="getarmyallnecketid" parameterType="java.util.Map"  resultType="String">
-    	select neckletid from sheepdogs where districtcode like concat(#{regimental1to4},'%')
+    	select neckletid from sheepdogs where districtcode like concat(#{division1to4},'%')
     </select>
     
      <select id="getarmycountexhibitrealtime" parameterType="java.util.Map"  resultType="int">
-    	select count(*) from exhibitrealtime where districtcode like concat(#{regimental1to4},'%')
+    	select count(*) from exhibitrealtime where districtcode like concat(#{division1to4},'%')
     </select>
     
       <select id="getarmycountappexhibitrealtime" parameterType="java.util.Map"  resultType="int">
-    	select count(*) from appexhibitrealtime where districtcode like concat(#{regimental1to4},'%')
+    	select count(*) from appexhibitrealtime where districtcode like concat(#{division1to4},'%')
     </select>
-    
-    <!-- GovToEchartsAreaName -->
-      <select id="echartsareanametemp"   resultType="String">
-    	select shortname from districts where districtname =#{areaname} or shortname =#{areaname}
-    </select>
-    <!-- EchartsAreaNameToGov -->
-      <select id="govareanametemp"   resultType="String">
-    	select districtname from districts where districtname =#{areaname} or shortname =#{areaname}
-    </select>
-    
-    
      
 </mapper> 

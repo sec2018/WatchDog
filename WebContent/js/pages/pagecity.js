@@ -1,48 +1,36 @@
-﻿var senddata = {};
-senddata.username = username;
-senddata.cityname = cityname;
-senddata.provincename = provincename;
-senddata.Ticket = Ticket;
-$.ajax({
-    url: "/api/cityapi",
-    type: "POST",
-    data: senddata,
-    success: function (data) {
-        if (data == "failed") {
-            window.location.href = "/Login/SignIn";
-            return;
-        } else {
-            data = eval("(" + data + ")");
+﻿$(function(){
 
             $("#td_areadognumtotal").html("全市总数");
             $("#td_areamednumtotal").html("全市总数");
 
             //$("#tr_epidemicprovice").css("display", "none");
             //$("#tr_epidemiccity").css("display", "none");
-            $("#countyepidemictotal").text(data.data2[0].countyepidemictotal);
-            $("#villageepidemictotal").text(data.data2[0].villageepidemictotal);
-            $("#hamletepidemictotal").text(data.data2[0].hamletepidemictotal);
+            $("#countyepidemictotal").text(data.data2.countyepidemictotal);
+            $("#villageepidemictotal").text(data.data2.villageepidemictotal);
+            $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
 
             //$("#tr_admincountry").css("display", "none");
             //$("#tr_adminprovince").css("display", "none");
-            $("#cityadmintotal").text(data.data2[0].cityadmintotal);
-            $("#countyadmintotal").text(data.data2[0].countyadmintotal);
-            $("#villageadmintotal").text(data.data2[0].villageadmintotal);
-            $("#hamletadmintotal").text(data.data2[0].hamletadmintotal);
+            $("#cityadmintotal").text(data.data2.cityadmintotal);
+            $("#countyadmintotal").text(data.data2.countyadmintotal);
+            $("#villageadmintotal").text(data.data2.villageadmintotal);
+            $("#hamletadmintotal").text(data.data2.hamletadmintotal);
 
-            $("#countrydognumtotal").text(data.data2[0].countrydognumtotal);
-            $("#countryalldognumtotal").text(data.data2[0].alldognumtotal);
-            $("#citywsqdognumtotal").text(data.data2[0].feedernumtotal);
-            $("#countryratedognumtotal").text(((data.data2[0].countrydognumtotal + 0) * 100 / data.data2[0].alldognumtotal).toFixed(6));
-            $("#countrymednumtotal").text(data.data2[0].countrymednumtotal);
-
+            $("#neckdognumtotal").text(data.data2.neckdognumtotal);
+            $("#countryalldognumtotal").text(data.data2.alldognumtotal);
+            $("#citywsqdognumtotal").text(data.data2.feedernumtotal);
+            $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + 0) * 100 / data.data2.alldognumtotal).toFixed(6));
+            $("#countrymednumtotal").text(data.data2.countrymednumtotal);
+         
+            var cityGov;
+            var provinceGov;
             GetCityEcharts(data);
 
             //$("#tr_admin").click(function () {
             //    window.location.href = "SearchManager.html?districtcode=" + escape(data.data4.districtcode);
             //});
 
-            if (data.data1[0].privilegelevel == 1) {
+            if (data.data1.privilegelevel == 1) {
                 $("#span_leftscan").html("全国总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=3";
@@ -55,8 +43,8 @@ $.ajax({
                 //    return false;
                 //});
             }
-            else if (data.data1[0].privilegelevel == 2) {
-                $("#span_leftscan").html(provincename + "总览");
+            else if (data.data1.privilegelevel == 2) {
+                $("#span_leftscan").html(provinceGov + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=3";
                 })
@@ -67,8 +55,8 @@ $.ajax({
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
-            } else if (data.data1[0].privilegelevel == 3) {
-                $("#span_leftscan").html(data.data1[0].city + "总览");
+            } else if (data.data1.privilegelevel == 3) {
+                $("#span_leftscan").html(cityGov + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=3";
                 })
@@ -76,10 +64,12 @@ $.ajax({
                     window.location.href = "#";
                 });
                 $("#goback").css("display", "none");
+            } else {
+                window.location.href = "../user/logout.do";
             }
         }
-    }
-})
+    
+)
 
 
 function delCookie(name) {
@@ -128,8 +118,22 @@ $(function () {
     });
 });
 
+function objToArray(array) {
+    var arr = []
+    for (var i in array) {
+        arr.push(array[i]); 
+    }
+    console.log(arr);
+    return arr;
+}
+
 
 function GetCityEcharts(data) {
+	
+	cityGov = "" + data.data4.cityGov;
+	var cityEchartsAreaName="" + data.data4.cityEchartsAreaName;
+	provinceGov = "" + data.data4.provinceGov;
+    var provinceEchartsAreaName="" + data.data4.provinceEchartsAreaName;
     var p_names = new Array();
     var p_town_values = new Array();
     var p_dog_values = new Array();
@@ -139,14 +143,15 @@ function GetCityEcharts(data) {
     var p_percents = new Array();
     var p_feeders = new Array();
 
-    var city = data.data4.city;
-    $("#h3_logtitle").html(city);
+    
+    $("#h3_logtitle").html(cityGov);
     var map_ctrl = {};
-    map_ctrl[city] = true;
+    map_ctrl[cityEchartsAreaName] = true;
 
     var necklet_min = 0;
     var necklet_max = 100;
     var cur = 1;
+    data.data3 = objToArray(data.data3);
     for (var t = 0; t < data.data3.length; t++) {
 
         p_names.push(data.data3[t].countyname);
@@ -173,7 +178,7 @@ function GetCityEcharts(data) {
     // 路径配置
     require.config({
         paths: {
-            echarts: '/Views/js'
+            echarts: '../js'
         }
     });
 
@@ -242,7 +247,7 @@ function GetCityEcharts(data) {
                     {
                         name: '流行乡镇数量',
                         type: 'map',
-                        mapType: city,
+                        mapType: cityEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -254,7 +259,7 @@ function GetCityEcharts(data) {
                     {
                         name: '管理员总数量',
                         type: 'map',
-                        mapType: city,
+                        mapType: cityEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -266,7 +271,7 @@ function GetCityEcharts(data) {
                     {
                         name: '牧犬总数量',
                         type: 'map',
-                        mapType: city,
+                        mapType: cityEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -278,7 +283,7 @@ function GetCityEcharts(data) {
                     {
                         name: '项圈总数量',
                         type: 'map',
-                        mapType: city,
+                        mapType: cityEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -290,7 +295,7 @@ function GetCityEcharts(data) {
                     {
                         name: '喂饲器数量',
                         type: 'map',
-                        mapType: city,
+                        mapType: cityEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -302,7 +307,7 @@ function GetCityEcharts(data) {
                     {
                         name: '投药总次数',
                         type: 'map',
-                        mapType: city,
+                        mapType: cityEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -314,7 +319,7 @@ function GetCityEcharts(data) {
                     {
                         name: '项圈犬占比',
                         type: 'map',
-                        mapType: city,
+                        mapType: cityEchartsAreaName,
                         roam: false,
                         itemStyle: {
                             normal: { label: { show: true } },
@@ -676,13 +681,13 @@ function GetCityEcharts(data) {
                 "香港特别行政区": "810100",
                 "澳门特别行政区": "820000"
             };
-            mapGeoData.params[city] = {
+            mapGeoData.params[cityEchartsAreaName] = {
                 getGeoJson: (function (c) {
                     var geoJsonName = cityMap[c];
                     return function (callback) {
-                        $.getJSON('/Views/js/chart/geometryCouties/' + geoJsonName + '.json', callback);
+                        $.getJSON('../js/chart/geometryCouties/' + geoJsonName + '.json', callback);
                     }
-                })(city)
+                })(cityEchartsAreaName)
             }
 
             //responsive
@@ -694,7 +699,7 @@ function GetCityEcharts(data) {
             myChart.on("click", function (param) {
                 //alert(param.name + 'S');
                 if (param.seriesName != '' && param.name == name_selected) {
-                    window.location.href = "/Index/County?county=" + escape(param.name) + "&city=" + escape(cityname) + "&province=" + escape(provincename);
+                    //window.location.href = "../county/county?county=" + escape(param.name) + "&city=" + city + "&province=" + province;
                     //alert(param.name);
                 } else {
                     name_selected = param.name;

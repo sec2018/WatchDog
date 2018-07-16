@@ -19,6 +19,8 @@
         所以resource写成org/guus/mapping/userMapper.xml -->  
         <mapper resource="com/watchdog/mapping/UserMapper.xml" />  
         <mapper resource="com/watchdog/mapping/ProvinceMapper.xml" />  
+        <mapper resource="com/watchdog/mapping/CityMapper.xml" />  
         <mapper resource="com/watchdog/mapping/HamletMapper.xml" />  
+        <mapper resource="com/watchdog/mapping/UtilMapper.xml" />  
     </mappers>  
 </configuration> 

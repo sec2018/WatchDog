@@ -17,12 +17,13 @@ import com.watchdog.dao.ProvinceDao;
 import com.watchdog.model.Districts;
 import com.watchdog.model.Managers;
 import com.watchdog.model.Sheepdogs;
+import com.watchdog.util.NameConversionUtil;
+
 @Repository("provinceDao")
 public class ProvinceDaoImpl implements ProvinceDao {
 
     private SqlSession session;
-	
-	public ProvinceDaoImpl(){
+    ProvinceDaoImpl(){
 		//使用类加载器加载mybatis的配置文件（它也加载关联的映射文件）  
         String resource = "mybatis-config.xml";      
         Reader reader;
@@ -39,7 +40,8 @@ public class ProvinceDaoImpl implements ProvinceDao {
 	
 	@Override
 	public Map<String, Integer> GetIndexLogoInfo(String provincename) {	
-		provincename = EchartsAreaNameToGov(provincename);
+		 
+		provincename = NameConversionUtil.EchartsAreaNameToGov(session, provincename);
 		Map<String, Integer> map = new HashMap<String,Integer>();		 
 		Districts districtsist = null;
 		Map<String, String> mapparam = new HashMap<String,String>();
@@ -53,7 +55,6 @@ public class ProvinceDaoImpl implements ProvinceDao {
 
 		List<Sheepdogs> sdlist = null;
 		statement = "com.watchdog.dao.ProvinceDao.getprovinceindexinfo";//映射sql的标识字符串  
-        //执行查询返回一个唯一user对象的sql  
 		mapparam.put("provincecode0to2", provincecode0to2);
 		sdlist = session.selectList(statement, mapparam);
 		//佩戴项圈牧犬数量和喂食器数量
@@ -85,7 +86,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
 		
 		for(Districts each : dislist) {
 			if(each.getEpidemic() == 1) {//该区域为流行区
-				//根据区域编码将区域分类，如xx0000000000为省，xxxx00000000表明该区域为市级，xxxxxx000000为县级，xxxxxxxx0000为乡级，最后一位不为0则表示村级
+				//根据区域编码将区域分类，如xx0000000000为省，xxxx00000000表明该区域为市级，xxxxxx000000为县级，xxxxxxxxx000为乡级，最后三位不全为0则表示村级
 				if(each.getDistrictcode().substring(4, 12).equals("00000000")) {
 					cityepidemictotal++;
 				}
@@ -154,7 +155,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
 
 	@Override
 	public Map<String, Integer> GetArmyIndexLogo(String provincename) {
-		provincename = EchartsAreaNameToGov(provincename);
+		provincename = NameConversionUtil.EchartsAreaNameToGov(session, provincename);
  
 		Map<String, Integer> map = new HashMap<String,Integer>();		 
 		Districts districtsist = null;
@@ -170,7 +171,6 @@ public class ProvinceDaoImpl implements ProvinceDao {
 
 		List<Sheepdogs> sdlist = null;
 		statement = "com.watchdog.dao.ProvinceDao.getprovinceindexinfo";//映射sql的标识字符串  
-        //执行查询返回一个唯一user对象的sql  
 		mapparam.put("provincecode0to2", provincecode0to2);
 		sdlist = session.selectList(statement, mapparam);
 		//佩戴项圈牧犬数量和喂食器数量
@@ -261,7 +261,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
 
 	@Override
 	public Map<String, Object> GetProvinceMap(String provincename) {
-		provincename = EchartsAreaNameToGov(provincename);
+		provincename = NameConversionUtil.EchartsAreaNameToGov(session, provincename);
  
 		Map<String, Object> map = new HashMap<String,Object>();//保存请求返回的数据
 		Map<String, String> mapparam = new HashMap<String,String>();//sql参数
@@ -271,7 +271,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
 		String thisprovince = session.selectOne(statement,mapparam);//获得省区域编码
 	    String thisprovince1to2 = thisprovince.substring(0, 2);//编码前两位表示省份
 	    mapparam.put("thisprovince1to2", thisprovince1to2);
-		statement = "com.watchdog.dao.ProvinceDao.ywprovinces";//映射sql的标识字符串  
+		statement = "com.watchdog.dao.ProvinceDao.getcitiesandcounties";//映射sql的标识字符串  
 		//获得流行市和县
 		List<Districts> citiesandcounties = session.selectList(statement,mapparam);
 		int i=0;
@@ -342,7 +342,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
 	    String thisprovince1to2 = thisprovince.substring(0, 2);
 	    mapparam.put("thisprovince1to2", thisprovince1to2);
 	  //获得流行师和团
-		statement = "com.watchdog.dao.ProvinceDao.ywarmyprovinces";//映射sql的标识字符串  
+		statement = "com.watchdog.dao.ProvinceDao.getdivisionsandregimental";//映射sql的标识字符串  
 		List<Districts> divisionsandregimental = session.selectList(statement,mapparam);
 		int i=0;
 		for(Districts divisions : divisionsandregimental)
@@ -353,12 +353,12 @@ public class ProvinceDaoImpl implements ProvinceDao {
             	//保存每个师的相关信息
             	Map<String, Object> maptemp = new HashMap<String,Object>();
 				maptemp.put("divisionname", divisions.getDistrictname());
-				String regimental1to4 = divisions.getDistrictcode().substring(0, 4);
+				String division1to4 = divisions.getDistrictcode().substring(0, 4);
 				int regimentalnum = 0;
 				//统计每个流行师所属流行团的个数
 				for(Districts rt:divisionsandregimental) {
-					if(rt.getDistrictcode().startsWith(regimental1to4) && rt.getDistrictcode().endsWith("00") 
-							&& !rt.getDistrictcode().equals(regimental1to4+"0000")) {					 
+					if(rt.getDistrictcode().startsWith(division1to4) && rt.getDistrictcode().endsWith("00") 
+							&& !rt.getDistrictcode().equals(division1to4+"0000")) {					 
 						regimentalnum++;
 					}
 				}
@@ -370,7 +370,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
 				maptemp.put("managernum", managernum);
 				//计算牧犬总数
 				statement = "com.watchdog.dao.ProvinceDao.getarmyallnecketid";//映射sql的标识字符串  
-				mapparam.put("regimental1to4", regimental1to4);
+				mapparam.put("division1to4", division1to4);
 				List<String> dognumlist = session.selectList(statement,mapparam);
 				maptemp.put("dognum", dognumlist.size());
 				//计算项圈总数
@@ -412,30 +412,12 @@ public class ProvinceDaoImpl implements ProvinceDao {
 		
 		districtsist = session.selectOne(statement,mapparam);
 		String provincecode = districtsist.getDistrictcode();
-		map.put("province",GovToEchartsAreaName(provincename).replace("*",""));
+		map.put("provinceGov",NameConversionUtil.EchartsAreaNameToGov(session, provincename));
+		map.put("provinceEchartsAreaName",NameConversionUtil.GovToEchartsAreaName(session, provincename).replace("*",""));
 		map.put("districtcode",provincecode);
 		return map;
 	}
-	@Override
-	public String GovToEchartsAreaName(String areaname) {
-		Map<String, String> mapparam = new HashMap<String,String>();
-		mapparam.put("areaname", areaname);
-		String statement = "com.watchdog.dao.ProvinceDao.echartsareanametemp";//映射sql的标识字符串  
-		String echartsareaname =  session.selectOne(statement, mapparam);
-        
-        return echartsareaname;
-	}
-	
-	public String EchartsAreaNameToGov(String areaname) {
-		Map<String, String> mapparam = new HashMap<String,String>();
-		mapparam.put("areaname", areaname);
-		String statement = "com.watchdog.dao.ProvinceDao.govareanametemp";//映射sql的标识字符串  
-		String govareaname =  session.selectOne(statement, mapparam);
-	 
-		
-		return govareaname;
-	}
-
+ 
 
 
 }

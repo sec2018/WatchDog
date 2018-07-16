@@ -40,12 +40,7 @@ public class ProvinceServiceImpl implements ProvinceService {
 		return provinceDao.GetArmyProvinceMap(provincename);
 	}
 
-	@Override
-	public String GovToEchartsAreaName(String provincename) {
-		// TODO Auto-generated method stub
-		return provinceDao.GovToEchartsAreaName(provincename);
-	}
-
+ 
 	@Override
 	public Map<String, Object> GetDistrictcode(String provincename) {
 		// TODO Auto-generated method stub
