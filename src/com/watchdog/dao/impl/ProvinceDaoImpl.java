@@ -18,12 +18,12 @@ import com.watchdog.model.Districts;
 import com.watchdog.model.Managers;
 import com.watchdog.model.Sheepdogs;
 import com.watchdog.util.NameConversionUtil;
+
 @Repository("provinceDao")
 public class ProvinceDaoImpl implements ProvinceDao {
 
     private SqlSession session;
-	
-	public ProvinceDaoImpl(){
+    ProvinceDaoImpl(){
 		//使用类加载器加载mybatis的配置文件（它也加载关联的映射文件）  
         String resource = "mybatis-config.xml";      
         Reader reader;
@@ -40,6 +40,7 @@ public class ProvinceDaoImpl implements ProvinceDao {
 	
 	@Override
 	public Map<String, Integer> GetIndexLogoInfo(String provincename) {	
+		 
 		provincename = NameConversionUtil.EchartsAreaNameToGov(session, provincename);
 		Map<String, Integer> map = new HashMap<String,Integer>();		 
 		Districts districtsist = null;
