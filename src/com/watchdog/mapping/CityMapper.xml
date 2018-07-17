@@ -40,7 +40,7 @@
     	select districtcode from districts where districtname=#{provincename} or shortname=#{provincename}
     </select>
      <select id="getcitymap" resultType="String">
-    	select districtcode from districts where districtname=#{cityname} or shortname=#{cityname} and districtcode like concat(#{provincecode0to2},'%')
+    	select districtcode from districts where districtname=#{cityname} or shortname=#{cityname} and districtcode like concat(#{thisprovince1to2},'%')
     </select>
      
      <select id="getcountiesandtowns" resultType="com.watchdog.model.Districts">

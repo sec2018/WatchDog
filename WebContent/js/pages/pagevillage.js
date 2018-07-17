@@ -1,20 +1,5 @@
-﻿var senddata = {};
-senddata.username = username;
-senddata.villagename = villagename;
-senddata.countyname = countyname;
-senddata.cityname = cityname;
-senddata.provincename = provincename;
-$.ajax({
-    url: "/api/villageapi",
-    type: "POST",
-    data: senddata,
-    success: function (data) {
-        if (data == "failed") {
-            window.location.href = "/Login/SignIn";
-            return;
-        } else {
-            data = eval("(" + data + ")");
-            $("#h3_logtitle").html(data.data4.villagename);
+﻿$(function(){
+           /* $("#h3_logtitle").html(data.data4.villagename);*/
 
             $("#td_areadognumtotal").html("全乡总数");
             $("#td_areamednumtotal").html("全乡总数");
@@ -23,20 +8,20 @@ $.ajax({
             //$("#tr_epidemiccity").css("display", "none");
             //$("#tr_epidemiccounty").css("display", "none");
             //$("#tr_epidemicvillage").css("display", "none");
-            $("#hamletepidemictotal").text(data.data2[0].hamletepidemictotal);
+            $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
 
             //$("#tr_admincountry").css("display", "none");
             //$("#tr_adminprovince").css("display", "none");
             //$("#tr_admincity").css("display", "none");
             //$("#tr_admincounty").css("display", "none");
-            $("#villageadmintotal").text(data.data2[0].villageadmintotal);
-            $("#hamletadmintotal").text(data.data2[0].hamletadmintotal);
+            $("#villageadmintotal").text(data.data2.villageadmintotal);
+            $("#hamletadmintotal").text(data.data2.hamletadmintotal);
 
-            $("#countrydognumtotal").text(data.data2[0].countrydognumtotal);
-            $("#countryalldognumtotal").text(data.data2[0].alldognumtotal);
-            $("#villagewsqdognumtotal").text(data.data2[0].feedernumtotal);
-            $("#countryratedognumtotal").text(((data.data2[0].countrydognumtotal + data.data2[0].feedernumtotal) * 100 / data.data2[0].alldognumtotal).toFixed(6));
-            $("#countrymednumtotal").text(data.data2[0].countrymednumtotal);
+            $("#neckdognumtotal").text(data.data2.neckdognumtotal);
+            $("#countryalldognumtotal").text(data.data2.alldognumtotal);
+            $("#villagewsqdognumtotal").text(data.data2.feedernumtotal);
+            $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
+            $("#countrymednumtotal").text(data.data2.countrymednumtotal);
 
             GetVillageEcharts(data);
 
@@ -44,57 +29,57 @@ $.ajax({
             //    window.location.href = "SearchManager.html?districtcode=" + escape(data.data4.districtcode);
             //});
 
-            if (data.data1[0].privilegelevel == 1 || data.data1[0].privilegelevel == 0) {
+            if (data.data1.privilegelevel == 1 || data.data1.privilegelevel == 0) {
                 $("#span_leftscan").html("全国总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=5";
                 });
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
             }
-            else if (data.data1[0].privilegelevel == 2) {
-                $("#span_leftscan").html(provincename + "总览");
+            else if (data.data1.privilegelevel == 2) {
+                $("#span_leftscan").html(data.data1.province + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=5";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
-            } else if (data.data1[0].privilegelevel == 3) {
-                $("#span_leftscan").html(cityname + "总览");
+            } else if (data.data1.privilegelevel == 3) {
+                $("#span_leftscan").html(data.data1.city + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=5";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
-            } else if (data.data1[0].privilegelevel == 4) {
-                $("#span_leftscan").html(countyname + "总览");
+            } else if (data.data1.privilegelevel == 4) {
+                $("#span_leftscan").html(data.data1.county + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=5";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
-            } else if (data.data1[0].privilegelevel == 5) {
-                $("#span_leftscan").html(data.data4.villagename + "总览");
+            } else if (data.data1.privilegelevel == 5) {
+                $("#span_leftscan").html(data.data1.village + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=5";
                 });
@@ -103,8 +88,6 @@ $.ajax({
                 });
                 $("#goback").css("display", "none");
             }
-        }
-    }
 })
 
 
@@ -157,6 +140,14 @@ $(function () {
 var district, map = null;
 
 function GetVillageEcharts(data) {
+	var villageGov = "" + data.data4.villageGov;
+	var villageEchartsAreaName="" + data.data4.villageEchartsAreaName;
+	var countyGov = "" + data.data4.countyGov;
+	var countyEchartsAreaName="" + data.data4.countyEchartsAreaName;
+	var cityGov = "" + data.data4.cityGov;
+	var cityEchartsAreaName="" + data.data4.cityEchartsAreaName;
+	var provinceGov = "" + data.data4.provinceGov;
+    var provinceEchartsAreaName="" + data.data4.provinceEchartsAreaName;
     //=========================================//
 
     district, map = new AMap.Map("statsChart", {
@@ -273,7 +264,7 @@ function GetVillageEcharts(data) {
     var p_mednums = [];
     var p_feedernums = [];
 
-    $("#h3_logtitle").html(data.data4.villagename);
+    $("#h3_logtitle").html(villageGov);
     $.each(data.data3, function (i, n) {
         //alert("进入data");
         //alert(n["lng"]);
@@ -300,13 +291,13 @@ function GetVillageEcharts(data) {
         var one_title = null;
         var one_icondir = null;
         if (p_neckletnums[i] > 0) {
-            one_title = "<a href=\"/Index/Hamlet?hamlet=" + escape(p_titles[i]) + "&village=" + escape(villagename) + "&county=" + escape(countyname) + "&city=" + escape(cityname) + "&province=" + escape(provincename) + "\"><font color='blue'>"
+            one_title = "<a href=\"../hamlet/hamlet.do?hamlet=" + p_titles[i] + "&village=" + villageEchartsAreaName + "&county=" + countyEchartsAreaName + "&city=" + cityEchartsAreaName + "&province=" + provinceEchartsAreaName + "\"><font color='blue'>"
             + p_titles[i] + "</font></a>";
-            one_icondir = "/Views/img/village.png";
+            one_icondir = "../img/village.png";
             p_titles[i] = one_title;
         } else {
             one_title = "<font color='#C0C0C0'>" + p_titles[i] + "</font>";
-            one_icondir = "/Views/img/no.png";
+            one_icondir = "../img/no.png";
             p_titles[i] = one_title;
         }
 

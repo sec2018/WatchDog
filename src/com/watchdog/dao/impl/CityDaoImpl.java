@@ -416,15 +416,16 @@ public class CityDaoImpl implements CityDao {
 	public Map<String, Object> GetDistrictcode(String provincename, String cityname) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		Map<String, Object> mapparam = new HashMap<String,Object>();
-		Districts districtsist = null;
+	
 		mapparam.put("provincename", provincename);
 		mapparam.put("cityname", cityname);
-		//获得地区编号前两位(兵团)
+		//获得地区编号前两位(兵团或省)
 		String statement = "com.watchdog.dao.CityDao.getprovince";//映射sql的标识字符串  
 		Districts province = session.selectOne(statement,mapparam);
 		String provincecode = province.getDistrictcode();
 		String provincecode0to2 = provincecode.substring(0,2);	
-		//获得地区编号前四位(师)
+		mapparam.put("provincecode0to2", provincecode0to2);
+		//获得地区编号(师或市)
 		statement = "com.watchdog.dao.CityDao.getcity";//映射sql的标识字符串  
 		Districts city = session.selectOne(statement,mapparam);
 		String citycode = city.getDistrictcode();

@@ -20,6 +20,8 @@
         <mapper resource="com/watchdog/mapping/UserMapper.xml" />  
         <mapper resource="com/watchdog/mapping/ProvinceMapper.xml" />  
         <mapper resource="com/watchdog/mapping/CityMapper.xml" />  
+        <mapper resource="com/watchdog/mapping/CountyMapper.xml" />  
+        <mapper resource="com/watchdog/mapping/VillageMapper.xml" />  
         <mapper resource="com/watchdog/mapping/HamletMapper.xml" />  
         <mapper resource="com/watchdog/mapping/UtilMapper.xml" />  
     </mappers>  
