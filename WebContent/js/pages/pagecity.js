@@ -36,7 +36,7 @@
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=3";
                 });
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
@@ -49,7 +49,7 @@
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=3";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
@@ -61,7 +61,7 @@
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=3";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "#";
+                    window.location.href = "../user/index.do";
                 });
                 $("#goback").css("display", "none");
             } else {
@@ -699,7 +699,7 @@ function GetCityEcharts(data) {
             myChart.on("click", function (param) {
                 //alert(param.name + 'S');
                 if (param.seriesName != '' && param.name == name_selected) {
-                    //window.location.href = "../county/county?county=" + escape(param.name) + "&city=" + city + "&province=" + province;
+                    window.location.href = "../county/county.do?county=" + param.name + "&city=" + cityGov + "&province=" + provinceGov;
                     //alert(param.name);
                 } else {
                     name_selected = param.name;

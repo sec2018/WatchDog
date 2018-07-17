@@ -193,7 +193,7 @@
                     window.location.href = "/PageManageCommon/Manage";
                 });
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
@@ -206,7 +206,7 @@
                     window.location.href = "/PageManageCommon/Manage";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
@@ -218,7 +218,7 @@
                     window.location.href = "/PageManageCommon/Manage";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
@@ -230,7 +230,7 @@
                     window.location.href = "/PageManageCommon/Manage";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
@@ -242,7 +242,7 @@
                     window.location.href = "/PageManageCommon/Manage";
                 });
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);

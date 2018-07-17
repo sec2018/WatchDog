@@ -1,18 +1,4 @@
-﻿var senddata = {};
-senddata.username = username;
-senddata.countyname = countyname;
-senddata.cityname = cityname;
-senddata.provincename = provincename;
-$.ajax({
-    url: "/api/countyapi",
-    type: "POST",
-    data: senddata,
-    success: function (data) {
-        if (data == "failed") {
-            window.location.href = "/Login/SignIn";
-            return;
-        } else {
-            data = eval("(" + data + ")");
+﻿$(function(){
 
 
             $("#td_areadognumtotal").html("全县总数");
@@ -22,67 +8,68 @@ $.ajax({
             //$("#tr_epidemicprovice").css("display", "none");
             //$("#tr_epidemiccity").css("display", "none");
             //$("#tr_epidemiccounty").css("display", "none");
-            $("#villageepidemictotal").text(data.data2[0].villageepidemictotal);
-            $("#hamletepidemictotal").text(data.data2[0].hamletepidemictotal);
+            $("#villageepidemictotal").text(data.data2.villageepidemictotal);
+            $("#hamletepidemictotal").text(data.data2.hamletepidemictotal);
 
             //$("#tr_admincountry").css("display", "none");
             //$("#tr_adminprovince").css("display", "none");
             //$("#tr_admincity").css("display", "none");
-            $("#countyadmintotal").text(data.data2[0].countyadmintotal);
-            $("#villageadmintotal").text(data.data2[0].villageadmintotal);
-            $("#hamletadmintotal").text(data.data2[0].hamletadmintotal);
+            $("#countyadmintotal").text(data.data2.countyadmintotal);
+            $("#villageadmintotal").text(data.data2.villageadmintotal);
+            $("#hamletadmintotal").text(data.data2.hamletadmintotal);
 
-            $("#countrydognumtotal").text(data.data2[0].countrydognumtotal);
-            $("#countryalldognumtotal").text(data.data2[0].alldognumtotal);
-            $("#countywsqdognumtotal").text(data.data2[0].feedernumtotal);
-            $("#countryratedognumtotal").text(((data.data2[0].countrydognumtotal + data.data2[0].feedernumtotal) * 100 / data.data2[0].alldognumtotal).toFixed(6));
-            $("#countrymednumtotal").text(data.data2[0].countrymednumtotal);
+            $("#neckdognumtotal").text(data.data2.neckdognumtotal);
+            $("#countryalldognumtotal").text(data.data2.alldognumtotal);
+            $("#countywsqdognumtotal").text(data.data2.feedernumtotal);
+            $("#countryratedognumtotal").text(((data.data2.neckdognumtotal + data.data2.feedernumtotal) * 100 / data.data2.alldognumtotal).toFixed(6));
+            $("#countrymednumtotal").text(data.data2.countrymednumtotal);
 
+       
             GetCountyEcharts(data);
 
             //$("#tr_admin").click(function () {
             //    window.location.href = "SearchManager.html?districtcode=" + escape(data.data4.districtcode);
             //});
 
-            if (data.data1[0].privilegelevel == 1) {
+            if (data.data1.privilegelevel == 1) {
                 $("#span_leftscan").html("全国总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=4";
                 });
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
             }
-            else if (data.data1[0].privilegelevel == 2) {
-                $("#span_leftscan").html(data.data1[0].province + "总览");
+            else if (data.data1.privilegelevel == 2) {
+                $("#span_leftscan").html(data.data1.province + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=4";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
-            } else if (data.data1[0].privilegelevel == 3) {
-                $("#span_leftscan").html(data.data1[0].city + "总览");
+            } else if (data.data1.privilegelevel == 3) {
+                $("#span_leftscan").html(data.data1.city + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=4";
                 })
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);
                 //    return false;
                 //});
-            } else if (data.data1[0].privilegelevel == 4) {
-                $("#span_leftscan").html(data.data1[0].county + "总览");
+            } else if (data.data1.privilegelevel == 4) {
+                $("#span_leftscan").html(data.data1.county + "总览");
                 $("#a_managepage").click(function () {
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=4";
                 })
@@ -91,10 +78,10 @@ $.ajax({
                 });
                 $("#goback").css("display", "none");
             } else {
-                window.location.href = "/Login/SignIn";
+                window.location.href = "../user/logout.do";
             }
-        }
-    }
+        
+    
 })
 
 
@@ -158,8 +145,14 @@ $(function () {
 
 var district, map = null;
 
-
 function GetCountyEcharts(data) {
+	
+	var countyGov = "" + data.data4.countyGov;
+	var countyEchartsAreaName="" + data.data4.countyEchartsAreaName;
+	var cityGov = "" + data.data4.cityGov;
+	var cityEchartsAreaName="" + data.data4.cityEchartsAreaName;
+	var provinceGov = "" + data.data4.provinceGov;
+    var provinceEchartsAreaName="" + data.data4.provinceEchartsAreaName;
 
 
     district, map = new AMap.Map("statsChart", {
@@ -215,13 +208,11 @@ function GetCountyEcharts(data) {
     //AMap.event.addListener(map, 'zoomend', _onZoomEnd);
 
 
-    var cityname = data.data4.cityname;
-    var countyname = data.data4.countyname;
-    $("#h3_logtitle").html(countyname);
+    $("#h3_logtitle").html(countyGov);
 
     //===============查找行政区划函数==========================//
 
-    function lookforCounty(countyname) {
+    function lookforCounty(countyEchartsAreaName) {
         //加载行政区划插件
         AMap.service('AMap.DistrictSearch', function () {
             var opts = {
@@ -233,8 +224,8 @@ function GetCountyEcharts(data) {
             district = new AMap.DistrictSearch(opts);
             district.setLevel('district');
             //行政区查询
-            district.search(countyname, function (status, result) {
-                var bounds = result.districtList[0].boundaries;
+            district.search(countyEchartsAreaName, function (status, result) {
+                var bounds = result.districtList.boundaries;
                 var polygons = [];
                 if (bounds) {
                     for (var i = 0, l = bounds.length; i < l; i++) {
@@ -249,7 +240,7 @@ function GetCountyEcharts(data) {
                         });
                         polygons.push(polygon);
                     }
-                    map.setFitView();//地图自适应
+                   // map.setFitView();//地图自适应
                 }
             });
         });
@@ -369,8 +360,7 @@ function GetCountyEcharts(data) {
     //==========================================//
 
 
-    lookforCounty(countyname);
-
+    lookforCounty(countyEchartsAreaName);
 
     var p_Xs = [];
     var p_Ys = [];
@@ -380,7 +370,6 @@ function GetCountyEcharts(data) {
     var p_dognums = [];
     var p_neckletnums = [];
     var p_mednums = [];
-
     $.each(data.data3, function (i, n) {
         //alert("进入data");
         //alert(n["lng"]);
@@ -404,15 +393,15 @@ function GetCountyEcharts(data) {
         var one_title = null;
         var one_icondir = null;
         if (p_neckletnums[i] > 0) {
-            one_title = "<a href=\"/Index/Village?village=" + escape(p_titles[i]) + "&county=" + escape(countyname) + "&city=" + escape(cityname) + "&province=" + escape(provincename) + "\"><font color='red'>" + p_titles[i] + "</font></a>";
-            one_icondir = "/Views/img/town.png";
+            one_title = "<a href=\"../village/village?village=" + p_titles[i] + "&county=" + countyGov + "&city=" + cityGov + "&province=" + provinceGov + "\"><font color='red'>" + p_titles[i] + "</font></a>";
+            one_icondir = "../img/town.png";
             //one_icondir = "http://api.map.baidu.com/img/markers.png";
             //one_icondir = "img/town.png";
 
             p_titles[i] = one_title;
         } else {
             one_title = "<font color='#C0C0C0'>" + p_titles[i] + "</font>";
-            one_icondir = "/Views/img/no.png";
+            one_icondir = "../img/no.png";
             p_titles[i] = one_title;
         }
 
@@ -434,6 +423,6 @@ function GetCountyEcharts(data) {
         "</div>";
 
         markers.push(addMarker([p_Xs[i], p_Ys[i]], one_title, one_content, one_icondir));
-
     });
+    map.setFitView();//地图自适应
 }

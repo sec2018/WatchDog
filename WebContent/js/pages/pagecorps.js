@@ -32,7 +32,7 @@
                     window.location.href = "/PageManageCommon/MapToManage?districtcode=" + data.data4.districtcode + "&arealevel=2";
                 });
                 $("#a_areasee").click(function () {
-                    window.location.href = "/Index?UserName=" + username + "&Ticket=" + Ticket;
+                    window.location.href = "../user/index.do";
                 });
                 //$("#goback").click(function () {
                 //    window.location.href = history.go(-1);

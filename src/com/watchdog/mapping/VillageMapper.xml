@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 -->  
+<mapper namespace="com.watchdog.dao.VillageDao">  
+    <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复   
+            使用parameterType属性指明查询时使用的参数类型，  
+            resultType属性指明查询返回的结果集类型   
+            resultType="org.guus.bean.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->  
+    
+    <select id="getProvince" resultType="com.watchdog.model.Districts">
+    	select * from districts where districtname=#{provinceName} or shortname=#{provinceName}
+    </select>
+    <select id="getCity" resultType="com.watchdog.model.Districts">
+	select * from districts where districtname=#{cityName} or shortname=#{cityName} and districtcode like concat(#{provinceCode0to2},'%')
+     </select>
+    <select id="getCounty" resultType="com.watchdog.model.Districts">
+	select * from districts where districtname=#{countyName} or shortname=#{countyName} and districtcode like concat(#{cityCode0to4},'%')
+     </select>
+    <select id="getVillage" resultType="com.watchdog.model.Districts">
+	select * from districts where districtname=#{villageName} or shortname=#{villageName} and districtcode like concat(#{countyCode0to6},'%')
+     </select>
+    <select id="getVillageIndexInfo" resultType="com.watchdog.model.Sheepdogs">
+    	select * from sheepdogs where districtcode like concat(#{villageCode0to9},'%') and ((neckletid ='-1' and apparatusid !='-1') or (apparatusid ='-1' and neckletid !='-1'))
+    </select>
+    <select id="getExhiCount" resultType="int">
+    	 select count(*) from exhibitrealtime where districtcode like concat(#{villageCode0to9},'%')
+    </select>
+    <select id="getAppexhiCount" resultType="int">
+    	 select count(*) from appexhibitrealtime  where districtcode like concat(#{villageCode0to9},'%')
+    </select>
+    <select id="ywDisctricts" resultType="com.watchdog.model.Districts">
+    	select districtcode,epidemic from districts where districtcode like concat(#{villageCode0to9},'%')
+    </select>
+     <select id="getManagerLevel" resultType="int">
+    	select privilegelevel from managers where province=#{provinceName} and city=#{cityName} and county=#{countyName} and village=#{villageName}
+    </select>
+     <select id="getAllDogNum" resultType="int">
+    	select count(*) from sheepdogs where districtcode like concat(#{villageCode0to9} , '%');
+    </select>
+    
+  <!--    citymap   -->
+     <select id="getProvinceMap" resultType="String">
+    	select districtcode from districts where districtname=#{provinceName} or shortname=#{provinceName}
+    </select>
+     <select id="getCityMap" resultType="String">
+    	select districtcode from districts where districtname=#{cityName} or shortname=#{cityName} and districtcode like concat(#{thisProvince0to2},'%')
+    </select>
+     <select id="getCountyMap" resultType="String">
+    	select districtcode from districts where districtname=#{countyName} or shortname=#{countyName} and districtcode like concat(#{thisCity0to4},'%')
+    </select>
+     <select id="getVillageMap" resultType="String">
+    	select districtcode from districts where districtname=#{villageName} or shortname=#{villageName} and districtcode like concat(#{thisCounty0to6},'%')
+    </select>
+     
+     <select id="getHamlets" resultType="com.watchdog.model.Districts">
+    	select districtcode, districtname,shortname,epidemic,lng,lat from districts where districtcode REGEXP concat(#{thisVillage0to9}, '.{3}') and districtcode !=concat(#{thisVillage0to9}, '000')and epidemic = 1 
+    </select>
+     
+     <select id="getManagerNum" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from managers where county=#{districtName}
+    </select>
+    
+        <select id="getAllNecketId" parameterType="java.util.Map"  resultType="String">
+    	select neckletid from sheepdogs where districtcode=#{hamletCode}
+    </select>
+    
+      <select id="getCountExhibitrealtime" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from exhibitrealtime where districtcode=#{hamletCode}
+    </select>
+    
+      <select id="getCountAppexhibitrealtime" parameterType="java.util.Map"  resultType="int">
+    	select count(*) from appexhibitrealtime where districtcode=#{hamletCode}
+    </select>
+    
+</mapper> 
